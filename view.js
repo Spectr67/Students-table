@@ -5,11 +5,12 @@ function onClickShowTable() {
   handleLoadStudents()
 }
 
-function renderTable(students) {
-  students.forEach(renderTableRow)
+function renderTableTBodyList(students) {
+  document.querySelector('tbody').innerHTML = ''
+  students.forEach(renderTableTBody)
 }
 
-function renderTableRow(student) {
+function renderTableTBody(student) {
   const elTbody = document.querySelector('tbody')
   const elTr = generateTr(student)
   elTbody.appendChild(elTr)
