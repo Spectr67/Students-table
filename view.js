@@ -6,40 +6,41 @@ function onClickShowTable() {
 } 
 
 function renderTable(students) {
-// document.querySelector(".students").value = ' '
-students.forEach(renderCellsRows)
+students.forEach(renderTableRow)
 }
 
-function renderCellsRows(student) {
-  const table = document.querySelector("table")
-  const elTr = generateTable(student)
-  table.appendChild(elTr)
+function renderTableRow(student) {
+  const elTbody = document.querySelector("tbody")
+  const elTr = generateTr(student)
+  elTbody.appendChild(elTr)
 }
 
-function generateTable(student) {
+function generateTr(student) {
 const elTr = document.createElement("tr")
-const elThiD = document.createElement("th")
-const elThFirstName = document.createElement("th")
-const elThSecondName= document.createElement("th")
-const elThAge = document.createElement("th")
-const elThBudget = document.createElement("th")
-const elThFaculty = document.createElement("th")
+const elTdNone = document.createElement("th")
+const elTdId = document.createElement("th")
+const elTdFirstName = document.createElement("th")
+const elTdSecondName= document.createElement("th")
+const elTdAge = document.createElement("th")
+const elTdBudget = document.createElement("th")
+const elTdFaculty = document.createElement("th")
 
-elThiD.textContent = student.id
-elThFirstName.textContent = student.firstName
-elThSecondName.textContent = student.elThSecondName
-elThAge.textContent = student.age
-elThBudget.textContent = student.isOnBudget 
-elThFaculty.textContent = student.faculty 
+elTdId.textContent = student.id
+elTdFirstName.textContent = student.firstName
+elTdSecondName.textContent = student.secondName
+elTdAge.textContent = student.age
+elTdBudget.textContent = student.isOnBudget 
+elTdFaculty.textContent = student.faculty 
 
-elTr.appendChild(elThiD)
-elTr.appendChild(elThFirstName)
-elTr.appendChild(elThSecondName)
-elTr.appendChild(elThAge)
-elTr.appendChild(elThBudget)
-elTr.appendChild(elThFaculty)
+elTr.appendChild(elTdNone)
+elTr.appendChild(elTdId)
+elTr.appendChild(elTdFirstName)
+elTr.appendChild(elTdSecondName)
+elTr.appendChild(elTdAge)
+elTr.appendChild(elTdBudget)
+elTr.appendChild(elTdFaculty)
 
-elTr.classList.add('students')
+
 return elTr
 }
 
