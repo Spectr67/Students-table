@@ -1,8 +1,24 @@
-const showButton = document.querySelector('button')
-showButton.onclick = onClickShowTable
+const elButtonGetStudents = document.querySelector('#btnGetStudents')
+const elButtonAddStudent = document.querySelector('#btnAddStudent')
+elButtonGetStudents.onclick = onClickGetStudents
+elButtonAddStudent.onclick = onClickAddStudent
 
-function onClickShowTable() {
-  handleLoadStudents()
+function onClickGetStudents() {
+  handleGetStudents()
+}
+
+function onClickAddStudent() {
+  const listInputs = document.querySelectorAll('tfoot input')
+  const valuesInputs = Array.from(listInputs).map(input => input.value)
+  const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
+
+  const entries = props.map((_, idx) => [props[idx], valuesInputs[idx]])
+  const object = Object.fromEntries(entries)
+
+  console.log(entries)
+  console.log(object)
+
+  handleAddStudent(object)
 }
 
 function renderTableTBodyList(students) {

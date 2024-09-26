@@ -1,0 +1,20 @@
+GET https://web-app.click/university/api/v1/students/
+###
+
+GET https://web-app.click/university/api/v1/students/73
+###
+
+POST https://web-app.click/university/api/v1/students/
+content-type: application/json
+
+{"bad":"bad","firstName":"ooooooo","secondName":"ooooooo","age":19,"isOnBudget":true,"faculty":"ooooooo"}
+###
+
+PATCH https://web-app.click/university/api/v1/students/6
+content-type: application/json
+
+{"bad":"bad","firstName":"xxxxxxx","secondName":"xxxxxxx","age":11,"isOnBudget":false,"faculty":"xxxxxxx"}
+###
+
+DELETE https://web-app.click/university/api/v1/students/6
+###

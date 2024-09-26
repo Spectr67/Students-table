@@ -1,14 +1,19 @@
-const API_STUDENTS = 'https://web-app.click/university/api/v1/students/'
-let students = []
+const model = {
+  students: [],
 
-async function sendRequest(url) {
-  const resp = await fetch(url)
-  const json = await resp.json()
-  return json
-}
+  setStudents(students) {
+    this.students = students
+  },
 
-async function updateStudents() {
-  let obj = await sendRequest(API_STUDENTS)
-  students = obj.payload
-  console.log(students)
+  getStudents() {
+    return this.students //.filter(student => student.age >= 18)
+  },
+
+  addStudent(student) {
+    this.students.push(student)
+  },
+
+  addStudentFromEntries(entries) {
+    //
+  },
 }
