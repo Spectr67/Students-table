@@ -9,7 +9,11 @@ function onClickGetStudents() {
 
 function onClickAddStudent() {
   const listInputs = document.querySelectorAll('tfoot input')
-  const valuesInputs = Array.from(listInputs).map(input => input.value)
+  const valuesInputs = Array.from(listInputs).map(input => {
+    if (input.value) return input.value
+    if (isFinite(x)) return +input.value
+    if (input.type === 'checkbox') return input.checked
+  })
   const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
 
   const entries = props.map((_, idx) => [props[idx], valuesInputs[idx]])

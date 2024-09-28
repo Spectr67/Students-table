@@ -16,5 +16,5 @@ content-type: application/json
 {"bad":"bad","firstName":"xxxxxxx","secondName":"xxxxxxx","age":11,"isOnBudget":false,"faculty":"xxxxxxx"}
 ###
 
-DELETE https://web-app.click/university/api/v1/students/6
+DELETE https://web-app.click/university/api/v1/students/f1eb80c5
 ###

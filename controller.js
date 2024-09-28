@@ -4,7 +4,8 @@ async function handleGetStudents() {
   renderTableTBodyList(model.getStudents())
 }
 
-function handleAddStudent(student) {
-  model.addStudent(student)
+async function handleAddStudent(student) {
+  const createdStudent = await api.postStudent(student)
+  model.addStudent(createdStudent)
   renderTableTBodyList(model.getStudents())
 }
