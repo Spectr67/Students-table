@@ -1,22 +1,30 @@
 const elButtonGetStudents = document.querySelector('#btnGetStudents')
 const elButtonAddStudent = document.querySelector('#btnAddStudent')
+const elButtonDeliteStudent = document.querySelector('#btnDeleteStudent')
 elButtonGetStudents.onclick = onClickGetStudents
 elButtonAddStudent.onclick = onClickAddStudent
+elButtonDeliteStudent.onclick = onClickDeleteStudent
+
+function onClickDeleteStudent() {
+  let deletedStudent = document.querySelector('tbody tr:last-child')
+  handleDeleteStudent(deletedStudent)
+}
 
 function onClickGetStudents() {
   handleGetStudents()
 }
 
 function onClickAddStudent() {
-  const listInputs = document.querySelectorAll('tfoot input')
-  const valuesInputs = Array.from(listInputs).map(input => {
-    if (input.value) return input.value
-    if (isFinite(x)) return +input.value
-    if (input.type === 'checkbox') return input.checked
-  })
-  const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
+  const firstName = document.getElementById('First_name').value
+  const secondName = document.getElementById('Second_name').value
+  const age = +document.getElementById('Age').value
+  const isOnBudget = document.getElementById('Is_on_budget').checked
+  const faculty = document.getElementById('Faculty').value
 
-  const entries = props.map((_, idx) => [props[idx], valuesInputs[idx]])
+  const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
+  const valuesInputs = [firstName, secondName, age, isOnBudget, faculty]
+
+  const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
   const object = Object.fromEntries(entries)
 
   console.log(entries)

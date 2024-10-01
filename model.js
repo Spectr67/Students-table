@@ -16,4 +16,8 @@ const model = {
   addStudentFromEntries(entries) {
     //
   },
+
+  deleteStudent(student) {
+    this.students.pop(student)
+  },
 }
