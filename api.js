@@ -10,8 +10,14 @@ const api = {
     }
 
     const resp = await fetch(url, options)
-    const json = await resp.json()
-    return json.payload
+    const text = await resp.text()
+    console.log('>>', text)
+
+    if (text) {
+      const json = JSON.parse(text)
+      console.log('>>', json)
+      return json.payload
+    }
   },
 
   async getStudents() {
@@ -23,11 +29,17 @@ const api = {
   },
 
   async deleteStudentById(id) {
-    return await this.sendRequest(API_STUDENTS + id, 'DELETE')
+    await this.sendRequest(API_STUDENTS + id, 'DELETE')
   },
 }
 
-api.deleteStudentById(720)
+async function qwerty() {
+  let i = 80
+  while (i < 90) {
+    await api.deleteStudentById(i)
+    i++
+  }
+}
 
 // api.postStudent({
 //   bad: 'bad',
