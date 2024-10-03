@@ -6,8 +6,8 @@ elButtonAddStudent.onclick = onClickAddStudent
 elButtonDeliteStudent.onclick = onClickDeleteStudent
 
 function onClickDeleteStudent() {
-  let deletedStudent = document.querySelector('tbody tr:last-child')
-  handleDeleteStudent(deletedStudent)
+  let idToDelete = document.querySelector('#idToDelete').value
+  handleDeleteStudent(idToDelete)
 }
 
 function onClickGetStudents() {
@@ -26,9 +26,6 @@ function onClickAddStudent() {
 
   const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
   const object = Object.fromEntries(entries)
-
-  console.log(entries)
-  console.log(object)
 
   handleAddStudent(object)
 }

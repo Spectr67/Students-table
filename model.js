@@ -17,7 +17,7 @@ const model = {
     //
   },
 
-  deleteStudent(student) {
-    this.students.pop(student)
+  deleteStudent(id) {
+    this.students.filter(student => student !== id)
   },
 }

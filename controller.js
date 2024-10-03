@@ -10,8 +10,8 @@ async function handleAddStudent(student) {
   renderTableTBodyList(model.getStudents())
 }
 
-async function handleDeleteStudent(student) {
-  await api.deleteStudentById(student)
-  model.deleteStudent(deletedStudent??)
+async function handleDeleteStudent(idToDelete) {
+  await api.deleteStudentById(idToDelete)
+  model.deleteStudent(idToDelete)
   renderTableTBody(model.getStudents())
 }

@@ -11,11 +11,9 @@ const api = {
 
     const resp = await fetch(url, options)
     const text = await resp.text()
-    console.log('>>', text)
 
     if (text) {
       const json = JSON.parse(text)
-      console.log('>>', json)
       return json.payload
     }
   },
@@ -35,7 +33,7 @@ const api = {
 
 async function qwerty() {
   let i = 80
-  while (i < 90) {
+  while (i < 800) {
     await api.deleteStudentById(i)
     i++
   }
