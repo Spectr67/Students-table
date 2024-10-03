@@ -5,30 +5,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
   <body>
     <table cellpadding="5">
       <thead>
         <tr>
-          <th>№</th>
           <th>ID</th>
           <th>First Name</th>
           <th>Second Name</th>
           <th>Age</th>
           <th>Is on budget</th>
           <th>Faculty</th>
+          <th>action</th>
         </tr>
       </thead>
       <tbody></tbody>
       <tfoot>
-        <th>№</th>
         <th>ID</th>
         <form action="">
-          <th><input type="text" , id="First_name" /></th>
-          <th><input type="text" , id="Second_name" /></th>
-          <th><input type="number" , id="Age" /></th>
-          <th><input type="checkbox" , id="Is_on_budget" /></th>
-          <th><input type="text" , id="Faculty" /></th>
+          <th><input type="text" id="First_name" required /></th>
+          <th><input type="text" id="Second_name" required /></th>
+          <th><input type="number" id="Age" required /></th>
+          <th><input type="checkbox" id="Is_on_budget" /></th>
+          <th><input type="text" id="Faculty" required /></th>
+          <th>
+            <button>
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </th>
         </form>
       </tfoot>
     </table>
