@@ -22,6 +22,10 @@ const api = {
     return await this.sendRequest(API_STUDENTS)
   },
 
+  async getStudentById(id) {
+    return await this.sendRequest(API_STUDENTS + id)
+  },
+
   async postStudent(student) {
     return await this.sendRequest(API_STUDENTS, 'POST', student)
   },
@@ -29,15 +33,19 @@ const api = {
   async deleteStudentById(id) {
     await this.sendRequest(API_STUDENTS + id, 'DELETE')
   },
+
+  async patchStudentById(id, student) {
+    return await this.sendRequest(API_STUDENTS + id, 'PATCH', student)
+  },
 }
 
-async function qwerty() {
-  let i = 80
-  while (i < 800) {
-    await api.deleteStudentById(i)
-    i++
-  }
-}
+// async function qwerty() {
+//   let i = 80
+//   while (i < 800) {
+//     await api.deleteStudentById(i)
+//     i++
+//   }
+// }
 
 // api.postStudent({
 //   bad: 'bad',
