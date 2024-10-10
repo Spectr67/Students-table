@@ -6,6 +6,16 @@ elButtonGetStudents.onclick = onClickGetStudents
 elButtonAddStudent.onclick = onClickAddStudent
 elForm.onsubmit = onClickAddStudent
 
+function parseForm(elForm) {
+  const listFormElements = Array.from(elForm.elements)
+  const entries = listFormElements.map(el => [
+    el.name,
+    el.type === 'checkbox' ? el.checked : el.value,
+  ])
+  const object = Object.fromEntries(entries)
+  return object
+}
+
 function onClickDeleteStudent(e) {
   const elTr = e.target.closest('tr')
   const idToDelete = elTr.querySelector('th').textContent
@@ -19,19 +29,25 @@ function onClickGetStudents() {
 
 function onClickAddStudent(e) {
   e.preventDefault()
-  const firstName = document.getElementById('First_name').value
-  const secondName = document.getElementById('Second_name').value
-  const age = +document.getElementById('Age').value
-  const isOnBudget = document.getElementById('Is_on_budget').checked
-  const faculty = document.getElementById('Faculty').value
 
-  const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
-  const valuesInputs = [firstName, secondName, age, isOnBudget, faculty]
+  console.log(e.target)
+  const createdStudent = parseForm(e.target)
 
-  const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
-  const object = Object.fromEntries(entries)
+  console.log('>>', createdStudent)
 
-  handleAddStudent(object)
+  // const firstName = document.getElementById('First_name').value
+  // const secondName = document.getElementById('Second_name').value
+  // const age = +document.getElementById('Age').value
+  // const isOnBudget = document.getElementById('Is_on_budget').checked
+  // const faculty = document.getElementById('Faculty').value
+
+  // const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
+  // const valuesInputs = [firstName, secondName, age, isOnBudget, faculty]
+
+  // const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
+  // const object = Object.fromEntries(entries)
+
+  // handleAddStudent(object)
 }
 
 function renderTableTBodyList(students) {
@@ -92,7 +108,6 @@ function generateTr(student) {
 
 function onclickEditStudent(e) {
   const elTr = e.target.closest('tr')
-  e.preventDefault()
 
   const firstName = elTr.querySelector('td:nth-child(2)').textContent
   const secondName = elTr.querySelector('td:nth-child(3)').textContent
@@ -166,4 +181,8 @@ function onclickEditStudent(e) {
   }
 
   elTr.appendChild(saveButton)
+}
+
+function onclickEditStudent(e) {
+  const elTr = e.target.closest('tr')
 }
