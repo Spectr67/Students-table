@@ -5,10 +5,11 @@ const elForm = document.querySelector('form')
 elButtonGetStudents.onclick = onClickGetStudents
 elButtonAddStudent.onclick = onClickAddStudent
 elForm.onsubmit = onClickAddStudent
-elButtonDeliteStudent.onclick = onClickDeleteStudent
 
-function onClickDeleteStudent() {
-  let idToDelete = document.querySelector('#idToDelete').value
+function onClickDeleteStudent(e) {
+  const elTr = e.target.closest('tr')
+  const idToDelete = elTr.querySelector('th').textContent
+  console.log(idToDelete)
   handleDeleteStudent(idToDelete)
 }
 
@@ -59,6 +60,8 @@ function generateTr(student) {
   const elSpanEdit = document.createElement('span')
   elSpanDelete.textContent = 'delete'
   elSpanEdit.textContent = 'edit'
+  elButtonDelete.onclick = onClickDeleteStudent
+  elButtonEdit.onclick = onclickEditStudent
 
   elSpanDelete.classList.add('material-symbols-outlined')
   elSpanEdit.classList.add('material-symbols-outlined')
@@ -85,4 +88,82 @@ function generateTr(student) {
   elButtonDelete.appendChild(elSpanDelete)
 
   return elTr
+}
+
+function onclickEditStudent(e) {
+  const elTr = e.target.closest('tr')
+  e.preventDefault()
+
+  const firstName = elTr.querySelector('td:nth-child(2)').textContent
+  const secondName = elTr.querySelector('td:nth-child(3)').textContent
+  const age = elTr.querySelector('td:nth-child(4)').textContent
+  const isOnBudget = elTr.querySelector('td:nth-child(5)').textContent
+  const faculty = elTr.querySelector('td:nth-child(6)').textContent
+
+  const elTextareafirstName = document.createElement('textarea')
+  elTextareafirstName.value = firstName
+
+  const elTextareaSecondName = document.createElement('textarea')
+  elTextareaSecondName.value = secondName
+
+  const elTextareaAge = document.createElement('textarea')
+  elTextareaAge.value = age
+
+  const elTextareaOnBudget = document.createElement('textarea')
+  elTextareaOnBudget.value = isOnBudget
+
+  const elTextareafaculty = document.createElement('textarea')
+  elTextareafaculty.value = faculty
+
+  const firstNameCell = elTr.querySelector('td:nth-child(2)')
+  const secondNameCell = elTr.querySelector('td:nth-child(3)')
+  const ageCell = elTr.querySelector('td:nth-child(4)')
+  const budgetCell = elTr.querySelector('td:nth-child(5)')
+  const facultyCell = elTr.querySelector('td:nth-child(6)')
+
+  firstNameCell.replaceWith(elTextareafirstName)
+  secondNameCell.replaceWith(elTextareaSecondName)
+  ageCell.replaceWith(elTextareaAge)
+  budgetCell.replaceWith(elTextareaOnBudget)
+  facultyCell.replaceWith(elTextareafaculty)
+
+  const saveButton = document.createElement('button')
+  saveButton.textContent = 'Сохранить'
+
+  saveButton.onclick = () => {
+    const updatedStudent = {
+      updatedFirstName: elTextareafirstName.value,
+      updatedSecondName: elTextareaSecondName.value,
+      updatedAge: elTextareaAge.value,
+      updatedOnBudget: elTextareaOnBudget.value,
+      updatedFaculty: elTextareafaculty.value,
+    }
+    const id = document.querySelector
+    handleEditStudent(id, updatedStudent)
+
+    const newTdFirstName = document.createElement('td')
+    newTdFirstName.textContent = updatedFirstName
+
+    const newTdSecondName = document.createElement('td')
+    newTdSecondName.textContent = updatedSecondName
+
+    const newTdAge = document.createElement('td')
+    newTdAge.textContent = updatedAge
+
+    const newTdOnBudget = document.createElement('td')
+    newTdOnBudget.textContent = updatedOnBudget
+
+    const newTdFaculty = document.createElement('td')
+    newTdFaculty.textContent = updatedFaculty
+
+    firstNameCell.replaceWith(newTdFirstName)
+    secondNameCell.replaceWith(newTdSecondName)
+    ageCell.replaceWith(newTdAge)
+    budgetCell.replaceWith(newTdOnBudget)
+    facultyCell.replaceWith(newTdFaculty)
+
+    saveButton.remove()
+  }
+
+  elTr.appendChild(saveButton)
 }

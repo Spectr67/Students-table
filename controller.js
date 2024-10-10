@@ -15,3 +15,9 @@ async function handleDeleteStudent(idToDelete) {
   model.deleteStudent(idToDelete)
   renderTableTBody(model.getStudents())
 }
+
+async function handleEditStudent(newStudent) {
+  await api.patchStudentById(id, newStudent)
+
+  renderTableTBodyList(model.getStudents())
+}

@@ -20,4 +20,11 @@ const model = {
   deleteStudent(id) {
     this.students.filter(student => student !== id)
   },
+
+  editStudent(id, newStudent) {
+    const index = this.students.indexOf(id)
+    if (index !== -1) {
+      this.students[index] = newStudent
+    }
+  },
 }

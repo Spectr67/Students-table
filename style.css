@@ -19,6 +19,11 @@ th {
 input {
   width: 100px;
 }
+textarea {
+  width: 70px;
+  height: 35px;
+  display: inline;
+}
 
 tr {
   background: cornflowerblue;
