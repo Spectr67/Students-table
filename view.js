@@ -57,7 +57,7 @@ function renderTableTBody(student) {
   elTbody.appendChild(elTr)
 }
 
-function generateTr(student) {
+function generateTr(student, isEditable) {
   const elTr = document.createElement('tr')
   const elTdId = document.createElement('th')
   const elTdFirstName = document.createElement('td')
@@ -74,19 +74,49 @@ function generateTr(student) {
   elSpanEdit.textContent = 'edit'
   elButtonDelete.onclick = onClickDeleteStudent
   elButtonEdit.onclick = onclickEditStudent
-
   elSpanDelete.classList.add('material-symbols-outlined')
   elSpanEdit.classList.add('material-symbols-outlined')
 
-  // elButtonDelete.textContent = '❌'
-  // elButtonEdit.textContent = '📝'
-  elTdId.textContent = student.id
-  elTdFirstName.textContent = student.firstName
-  elTdSecondName.textContent = student.secondName
-  elTdAge.textContent = student.age
-  elTdBudget.textContent = student.isOnBudget
-  elTdFaculty.textContent = student.faculty
+  const inputFirstName = document.createElement('input')
+  const inputSecondName = document.createElement('input')
+  const inputAge = document.createElement('input')
+  const inputIsOnBudget = document.createElement('input')
+  const inputFaculty = document.createElement('input')
+  const saveButton = document.createElement('button')
 
+  if (!isEditable) {
+    inputFirstName.disabled = true
+    inputSecondName.disabled = true
+    inputAge.disabled = true
+    inputIsOnBudget.disabled = true
+    inputFaculty.disabled = true
+  }
+
+  inputFirstName.type = 'text'
+  inputSecondName.type = 'text'
+  inputAge.type = 'number'
+  inputIsOnBudget.type = 'checkbox'
+  inputFaculty.type = 'text'
+
+  inputFirstName.name = 'firstName'
+  inputSecondName.name = 'secondName'
+  inputAge.name = 'age'
+  inputIsOnBudget.name = 'isOnBudget'
+  inputFaculty.name = 'faculty'
+
+  inputFirstName.value = student.firstName
+  inputSecondName.value = student.secondName
+  inputAge.value = student.age
+  inputIsOnBudget.checked = student.isOnBudget
+  inputFaculty.value = student.faculty
+  elTdFirstName.appendChild(inputFirstName)
+  elTdSecondName.appendChild(inputSecondName)
+  elTdAge.appendChild(inputAge)
+  elTdBudget.appendChild(inputIsOnBudget)
+  elTdFaculty.appendChild(inputFaculty)
+  saveButton.textContent = 'Сохранить'
+  saveButton.onclick = onClickButtonSaveTr
+  elTdId.textContent = student.id
   elTr.appendChild(elTdId)
   elTr.appendChild(elTdFirstName)
   elTr.appendChild(elTdSecondName)
@@ -98,87 +128,37 @@ function generateTr(student) {
   elTdAction.appendChild(elButtonDelete)
   elButtonEdit.appendChild(elSpanEdit)
   elButtonDelete.appendChild(elSpanDelete)
-
+  elTr.appendChild(saveButton)
   return elTr
 }
 
 function onclickEditStudent(e) {
   const elTr = e.target.closest('tr')
 
-  const studentId = elTr.querySelector('th').textContent
-  const firstName = elTr.children[1].textContent
-  const secondName = elTr.children[2].textContent
-  const age = elTr.children[3].textContent
-  const isOnBudget = elTr.children[4].textContent === 'Yes'
-  const faculty = elTr.children[5].textContent
-  renderStudentTr(e, firstName, secondName, age, isOnBudget, faculty)
-  handleEditStudent(newStudent)
+  renderStudentTrEdit(elTr, false)
+
+  // handleEditStudent(newStudent)
 }
 
-function renderStudentTr(e, firstName, secondName, age, isOnBudget, faculty) {
+function renderStudentTrEdit(elTr, noEdit) {
+  elTr.querySelectorAll('input').forEach(elInput => (elInput.disabled = noEdit))
+}
+
+function onClickButtonSaveTr(e) {
   const elTr = e.target.closest('tr')
 
-  const inputFirstName = document.createElement('input')
-  inputFirstName.type = 'text'
-  inputFirstName.value = firstName
+  renderStudentTrEdit(elTr, true)
 
-  const inputSecondName = document.createElement('input')
-  inputSecondName.type = 'text'
-  inputSecondName.value = secondName
+  let q = fromElTrToObject(elTr)
 
-  const inputAge = document.createElement('input')
-  inputAge.type = 'number'
-  inputAge.value = age
+  console.log(q)
 
-  const inputIsOnBudget = document.createElement('input')
-  inputIsOnBudget.type = 'checkbox'
-  inputIsOnBudget.checked = isOnBudget
+  // handleEditStudent(studentId, newStudent)
 
-  const inputFaculty = document.createElement('input')
-  inputFaculty.type = 'text'
-  inputFaculty.value = faculty
-
-  elTr.children[1].innerHTML = ''
-  elTr.children[1].appendChild(inputFirstName)
-
-  elTr.children[2].innerHTML = ''
-  elTr.children[2].appendChild(inputSecondName)
-
-  elTr.children[3].innerHTML = ''
-  elTr.children[3].appendChild(inputAge)
-
-  elTr.children[4].innerHTML = ''
-  elTr.children[4].appendChild(inputIsOnBudget)
-
-  elTr.children[5].innerHTML = ''
-  elTr.children[5].appendChild(inputFaculty)
-
-  const saveButton = document.createElement('button')
-  saveButton.textContent = 'Сохранить'
-  saveButton.onclick = function () {
-    const updatedFirstName = inputFirstName.value
-    const updatedSecondName = inputSecondName.value
-    const updatedAge = inputAge.value
-    const updatedIsOnBudget = inputIsOnBudget.checked
-    const updatedFaculty = inputFaculty.value
-
-    const newStudent = {
-      firstName: updatedFirstName,
-      secondName: updatedSecondName,
-      age: updatedAge,
-      isOnBudget: updatedIsOnBudget,
-      faculty: updatedFaculty,
-    }
-
-    handleEditStudent(studentId, newStudent)
-
-    elTr.children[1].textContent = updatedFirstName
-    elTr.children[2].textContent = updatedSecondName
-    elTr.children[3].textContent = updatedAge
-    elTr.children[4].textContent = updatedIsOnBudget ? 'Yes' : 'No'
-    elTr.children[5].textContent = updatedFaculty
-    saveButton.remove()
-  }
-
-  elTr.children[6].appendChild(saveButton)
+  elTr.children[1].textContent = updatedFirstName
+  elTr.children[2].textContent = updatedSecondName
+  elTr.children[3].textContent = updatedAge
+  elTr.children[4].textContent = updatedIsOnBudget ? 'Yes' : 'No'
+  elTr.children[5].textContent = updatedFaculty
+  saveButton.remove()
 }

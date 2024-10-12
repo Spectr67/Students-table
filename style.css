@@ -41,3 +41,13 @@ table button {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }
+
+td > input {
+  border: 0;
+  outline: 0;
+}
+
+td > input[disabled] {
+  background: transparent;
+  color: white;
+}
