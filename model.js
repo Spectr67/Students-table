@@ -38,12 +38,10 @@ const model = {
     this.students = this.students.filter(student => student.id !== id)
   },
 
-  editStudent(id, newStudent) {
-    this.students.id
-    const index = this.students.indexOf(id)
-    if (index !== -1) {
-      this.students[index] = newStudent
-    }
+  editStudent(studentId, id, newStudent) {
+    return Object.entries(newStudent).filter(
+      subArray => subArray[1][id] === studentId
+    )[0]
   },
 }
 

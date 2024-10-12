@@ -29,11 +29,7 @@ function onClickGetStudents() {
 
 function onClickAddStudent(e) {
   e.preventDefault()
-
-  console.log(e.target)
   const createdStudent = parseForm(e.target)
-
-  console.log('>>', createdStudent)
 
   // const firstName = document.getElementById('First_name').value
   // const secondName = document.getElementById('Second_name').value
@@ -47,7 +43,7 @@ function onClickAddStudent(e) {
   // const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
   // const object = Object.fromEntries(entries)
 
-  // handleAddStudent(object)
+  handleAddStudent(createdStudent)
 }
 
 function renderTableTBodyList(students) {
@@ -109,80 +105,80 @@ function generateTr(student) {
 function onclickEditStudent(e) {
   const elTr = e.target.closest('tr')
 
-  const firstName = elTr.querySelector('td:nth-child(2)').textContent
-  const secondName = elTr.querySelector('td:nth-child(3)').textContent
-  const age = elTr.querySelector('td:nth-child(4)').textContent
-  const isOnBudget = elTr.querySelector('td:nth-child(5)').textContent
-  const faculty = elTr.querySelector('td:nth-child(6)').textContent
+  const studentId = elTr.querySelector('th').textContent
+  const firstName = elTr.children[1].textContent
+  const secondName = elTr.children[2].textContent
+  const age = elTr.children[3].textContent
+  const isOnBudget = elTr.children[4].textContent === 'Yes'
+  const faculty = elTr.children[5].textContent
+  renderStudentTr(e, firstName, secondName, age, isOnBudget, faculty)
+  handleEditStudent(newStudent)
+}
 
-  const elTextareafirstName = document.createElement('textarea')
-  elTextareafirstName.value = firstName
+function renderStudentTr(e, firstName, secondName, age, isOnBudget, faculty) {
+  const elTr = e.target.closest('tr')
 
-  const elTextareaSecondName = document.createElement('textarea')
-  elTextareaSecondName.value = secondName
+  const inputFirstName = document.createElement('input')
+  inputFirstName.type = 'text'
+  inputFirstName.value = firstName
 
-  const elTextareaAge = document.createElement('textarea')
-  elTextareaAge.value = age
+  const inputSecondName = document.createElement('input')
+  inputSecondName.type = 'text'
+  inputSecondName.value = secondName
 
-  const elTextareaOnBudget = document.createElement('textarea')
-  elTextareaOnBudget.value = isOnBudget
+  const inputAge = document.createElement('input')
+  inputAge.type = 'number'
+  inputAge.value = age
 
-  const elTextareafaculty = document.createElement('textarea')
-  elTextareafaculty.value = faculty
+  const inputIsOnBudget = document.createElement('input')
+  inputIsOnBudget.type = 'checkbox'
+  inputIsOnBudget.checked = isOnBudget
 
-  const firstNameCell = elTr.querySelector('td:nth-child(2)')
-  const secondNameCell = elTr.querySelector('td:nth-child(3)')
-  const ageCell = elTr.querySelector('td:nth-child(4)')
-  const budgetCell = elTr.querySelector('td:nth-child(5)')
-  const facultyCell = elTr.querySelector('td:nth-child(6)')
+  const inputFaculty = document.createElement('input')
+  inputFaculty.type = 'text'
+  inputFaculty.value = faculty
 
-  firstNameCell.replaceWith(elTextareafirstName)
-  secondNameCell.replaceWith(elTextareaSecondName)
-  ageCell.replaceWith(elTextareaAge)
-  budgetCell.replaceWith(elTextareaOnBudget)
-  facultyCell.replaceWith(elTextareafaculty)
+  elTr.children[1].innerHTML = ''
+  elTr.children[1].appendChild(inputFirstName)
+
+  elTr.children[2].innerHTML = ''
+  elTr.children[2].appendChild(inputSecondName)
+
+  elTr.children[3].innerHTML = ''
+  elTr.children[3].appendChild(inputAge)
+
+  elTr.children[4].innerHTML = ''
+  elTr.children[4].appendChild(inputIsOnBudget)
+
+  elTr.children[5].innerHTML = ''
+  elTr.children[5].appendChild(inputFaculty)
 
   const saveButton = document.createElement('button')
   saveButton.textContent = 'Сохранить'
+  saveButton.onclick = function () {
+    const updatedFirstName = inputFirstName.value
+    const updatedSecondName = inputSecondName.value
+    const updatedAge = inputAge.value
+    const updatedIsOnBudget = inputIsOnBudget.checked
+    const updatedFaculty = inputFaculty.value
 
-  saveButton.onclick = () => {
-    const updatedStudent = {
-      updatedFirstName: elTextareafirstName.value,
-      updatedSecondName: elTextareaSecondName.value,
-      updatedAge: elTextareaAge.value,
-      updatedOnBudget: elTextareaOnBudget.value,
-      updatedFaculty: elTextareafaculty.value,
+    const newStudent = {
+      firstName: updatedFirstName,
+      secondName: updatedSecondName,
+      age: updatedAge,
+      isOnBudget: updatedIsOnBudget,
+      faculty: updatedFaculty,
     }
-    const id = document.querySelector
-    handleEditStudent(id, updatedStudent)
 
-    const newTdFirstName = document.createElement('td')
-    newTdFirstName.textContent = updatedFirstName
+    handleEditStudent(studentId, newStudent)
 
-    const newTdSecondName = document.createElement('td')
-    newTdSecondName.textContent = updatedSecondName
-
-    const newTdAge = document.createElement('td')
-    newTdAge.textContent = updatedAge
-
-    const newTdOnBudget = document.createElement('td')
-    newTdOnBudget.textContent = updatedOnBudget
-
-    const newTdFaculty = document.createElement('td')
-    newTdFaculty.textContent = updatedFaculty
-
-    firstNameCell.replaceWith(newTdFirstName)
-    secondNameCell.replaceWith(newTdSecondName)
-    ageCell.replaceWith(newTdAge)
-    budgetCell.replaceWith(newTdOnBudget)
-    facultyCell.replaceWith(newTdFaculty)
-
+    elTr.children[1].textContent = updatedFirstName
+    elTr.children[2].textContent = updatedSecondName
+    elTr.children[3].textContent = updatedAge
+    elTr.children[4].textContent = updatedIsOnBudget ? 'Yes' : 'No'
+    elTr.children[5].textContent = updatedFaculty
     saveButton.remove()
   }
 
-  elTr.appendChild(saveButton)
-}
-
-function onclickEditStudent(e) {
-  const elTr = e.target.closest('tr')
+  elTr.children[6].appendChild(saveButton)
 }
