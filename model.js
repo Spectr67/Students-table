@@ -9,6 +9,7 @@ const model = {
       id: 4,
     },
     {
+      isEditable: false,
       firstName: 'aaa',
       secondName: 'sss',
       age: '6',
@@ -43,6 +44,8 @@ const model = {
       subArray => subArray[1][id] === studentId
     )[0]
   },
+
+  saveStudentById(id) {},
 }
 
 // model.editStudent(6, { qqq: 444 })

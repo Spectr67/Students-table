@@ -16,10 +16,22 @@ function parseForm(elForm) {
   return object
 }
 
+function convertTrToObject(elTr) {
+  console.log(elTr)
+  const entries = Array.from(elTr.querySelectorAll('input')).map(elInput => [
+    elInput.name,
+    elInput.type === 'number'
+      ? +elInput.value
+      : elInput.type === 'checkbox'
+      ? elInput.checked
+      : elInput.value,
+  ])
+  return Object.fromEntries(entries)
+}
+
 function onClickDeleteStudent(e) {
   const elTr = e.target.closest('tr')
   const idToDelete = elTr.querySelector('th').textContent
-  console.log(idToDelete)
   handleDeleteStudent(idToDelete)
 }
 
@@ -34,6 +46,24 @@ function onClickAddStudent(e) {
   handleAddStudent(createdStudent)
 }
 
+function onclickEditStudent(e) {
+  const elTr = e.target.closest('tr')
+  const studentId = elTr.querySelector('th').textContent
+  renderStudentTrEdit(elTr, false)
+}
+
+function onClickButtonSaveTr(e) {
+  const elTr = e.target.closest('tr')
+  const studentId = elTr.querySelector('th').textContent
+  let updatedStudent = convertTrToObject(elTr)
+  handleEditStudent(studentId, updatedStudent)
+  renderStudentTrEdit(elTr, true)
+}
+
+function renderStudentTrEdit(elTr, noEdit) {
+  elTr.querySelectorAll('input').forEach(elInput => (elInput.disabled = noEdit))
+}
+
 function renderTableTBodyList(students) {
   document.querySelector('tbody').innerHTML = ''
   students.forEach(renderTableTBody)
@@ -41,7 +71,7 @@ function renderTableTBodyList(students) {
 
 function renderTableTBody(student) {
   const elTbody = document.querySelector('tbody')
-  const elTr = generateTr(student)
+  const elTr = generateTr(student, true)
   elTbody.appendChild(elTr)
 }
 
@@ -65,6 +95,7 @@ function generateTr(student, isEditable) {
   elSpanDelete.classList.add('material-symbols-outlined')
   elSpanEdit.classList.add('material-symbols-outlined')
 
+  const inputId = document.createElement('input')
   const inputFirstName = document.createElement('input')
   const inputSecondName = document.createElement('input')
   const inputAge = document.createElement('input')
@@ -80,6 +111,7 @@ function generateTr(student, isEditable) {
     inputFaculty.disabled = true
   }
 
+  inputId.type = 'hidden'
   inputFirstName.type = 'text'
   inputSecondName.type = 'text'
   inputAge.type = 'number'
@@ -97,14 +129,17 @@ function generateTr(student, isEditable) {
   inputAge.value = student.age
   inputIsOnBudget.checked = student.isOnBudget
   inputFaculty.value = student.faculty
+
+  saveButton.textContent = 'Сохранить'
+  saveButton.onclick = onClickButtonSaveTr
+  elTdId.textContent = student.id
+
   elTdFirstName.appendChild(inputFirstName)
   elTdSecondName.appendChild(inputSecondName)
   elTdAge.appendChild(inputAge)
   elTdBudget.appendChild(inputIsOnBudget)
   elTdFaculty.appendChild(inputFaculty)
-  saveButton.textContent = 'Сохранить'
-  saveButton.onclick = onClickButtonSaveTr
-  elTdId.textContent = student.id
+
   elTr.appendChild(elTdId)
   elTr.appendChild(elTdFirstName)
   elTr.appendChild(elTdSecondName)
@@ -112,40 +147,10 @@ function generateTr(student, isEditable) {
   elTr.appendChild(elTdBudget)
   elTr.appendChild(elTdFaculty)
   elTr.appendChild(elTdAction)
+  elTr.appendChild(saveButton)
   elTdAction.appendChild(elButtonEdit)
   elTdAction.appendChild(elButtonDelete)
   elButtonEdit.appendChild(elSpanEdit)
   elButtonDelete.appendChild(elSpanDelete)
-  elTr.appendChild(saveButton)
   return elTr
-}
-
-function onclickEditStudent(e) {
-  const elTr = e.target.closest('tr')
-
-  renderStudentTrEdit(elTr, false)
-}
-
-function renderStudentTrEdit(elTr, noEdit) {
-  elTr.querySelectorAll('input').forEach(elInput => (elInput.disabled = noEdit))
-}
-
-function onClickButtonSaveTr(e) {
-  const elTr = e.target.closest('tr')
-  const studentId = elTr.querySelector('th').textContent
-  let updatedStudent = convertTrToObject(elTr)
-  handleEditStudent(studentId, updatedStudent)
-  renderStudentTrEdit(elTr, true)
-}
-
-function convertTrToObject(elTr) {
-  const entries = Array.from(elTr.querySelectorAll('input')).map(elInput => [
-    elInput.name,
-    elInput.type === 'number'
-      ? +elInput.value
-      : elInput.type === 'checkbox'
-      ? elInput.checked
-      : elInput.value,
-  ])
-  return Object.fromEntries(entries)
 }
