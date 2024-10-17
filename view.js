@@ -31,18 +31,6 @@ function onClickAddStudent(e) {
   e.preventDefault()
   const createdStudent = parseForm(e.target)
 
-  // const firstName = document.getElementById('First_name').value
-  // const secondName = document.getElementById('Second_name').value
-  // const age = +document.getElementById('Age').value
-  // const isOnBudget = document.getElementById('Is_on_budget').checked
-  // const faculty = document.getElementById('Faculty').value
-
-  // const props = ['firstName', 'secondName', 'age', 'isOnBudget', 'faculty']
-  // const valuesInputs = [firstName, secondName, age, isOnBudget, faculty]
-
-  // const entries = props.map((prop, idx) => [prop, valuesInputs[idx]])
-  // const object = Object.fromEntries(entries)
-
   handleAddStudent(createdStudent)
 }
 
@@ -136,8 +124,6 @@ function onclickEditStudent(e) {
   const elTr = e.target.closest('tr')
 
   renderStudentTrEdit(elTr, false)
-
-  // handleEditStudent(newStudent)
 }
 
 function renderStudentTrEdit(elTr, noEdit) {
@@ -146,19 +132,20 @@ function renderStudentTrEdit(elTr, noEdit) {
 
 function onClickButtonSaveTr(e) {
   const elTr = e.target.closest('tr')
-
+  const studentId = elTr.querySelector('th').textContent
+  let updatedStudent = convertTrToObject(elTr)
+  handleEditStudent(studentId, updatedStudent)
   renderStudentTrEdit(elTr, true)
+}
 
-  let q = fromElTrToObject(elTr)
-
-  console.log(q)
-
-  // handleEditStudent(studentId, newStudent)
-
-  elTr.children[1].textContent = updatedFirstName
-  elTr.children[2].textContent = updatedSecondName
-  elTr.children[3].textContent = updatedAge
-  elTr.children[4].textContent = updatedIsOnBudget ? 'Yes' : 'No'
-  elTr.children[5].textContent = updatedFaculty
-  saveButton.remove()
+function convertTrToObject(elTr) {
+  const entries = Array.from(elTr.querySelectorAll('input')).map(elInput => [
+    elInput.name,
+    elInput.type === 'number'
+      ? +elInput.value
+      : elInput.type === 'checkbox'
+      ? elInput.checked
+      : elInput.value,
+  ])
+  return Object.fromEntries(entries)
 }

@@ -38,8 +38,8 @@ const model = {
     this.students = this.students.filter(student => student.id !== id)
   },
 
-  editStudent(studentId, id, newStudent) {
-    return Object.entries(newStudent).filter(
+  editStudent(studentId, updatedStudent, id) {
+    return Object.entries(updatedStudent).filter(
       subArray => subArray[1][id] === studentId
     )[0]
   },
