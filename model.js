@@ -21,7 +21,8 @@ const model = {
 
   setStudents(students) {
     students.forEach(student => {
-      Object.assign(student, { isEditable: false })
+      student.isEditable = false
+      // Object.assign(student, { isEditable: false })
     })
     this.students = students
   },
@@ -42,6 +43,7 @@ const model = {
     const findedStudent = this.students.find(student => student.id === id)
     delete updatedStudent.id
     Object.assign(findedStudent, updatedStudent)
+    updatedStudent.isEditable = false
   },
 
   saveStudentById(id) {},

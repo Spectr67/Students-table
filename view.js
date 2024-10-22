@@ -61,7 +61,7 @@ function renderTableTBodyList(students) {
 
 function renderTableTBody(student) {
   const elTbody = document.querySelector('tbody')
-  const elTr = generateTr(student, true)
+  const elTr = generateTr(student, false)
   elTbody.appendChild(elTr)
 }
 
