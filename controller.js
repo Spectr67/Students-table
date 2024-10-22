@@ -19,6 +19,6 @@ async function handleDeleteStudent(idToDelete) {
 async function handleEditStudent(studentId, updatedStudent) {
   console.log(studentId, updatedStudent)
   await api.patchStudentById(studentId, updatedStudent)
-  model.editStudent(studentId, updatedStudent)
+  model.editStudentById(studentId, updatedStudent)
   renderTableTBodyList(model.getStudents())
 }

@@ -6,18 +6,7 @@ elButtonGetStudents.onclick = onClickGetStudents
 elButtonAddStudent.onclick = onClickAddStudent
 elForm.onsubmit = onClickAddStudent
 
-function parseForm(elForm) {
-  const listFormElements = Array.from(elForm.elements)
-  const entries = listFormElements.map(el => [
-    el.name,
-    el.type === 'checkbox' ? el.checked : el.value,
-  ])
-  const object = Object.fromEntries(entries)
-  return object
-}
-
 function convertTrToObject(elTr) {
-  console.log(elTr)
   const entries = Array.from(elTr.querySelectorAll('input')).map(elInput => [
     elInput.name,
     elInput.type === 'number'
@@ -26,6 +15,7 @@ function convertTrToObject(elTr) {
       ? elInput.checked
       : elInput.value,
   ])
+
   return Object.fromEntries(entries)
 }
 
@@ -41,7 +31,7 @@ function onClickGetStudents() {
 
 function onClickAddStudent(e) {
   e.preventDefault()
-  const createdStudent = parseForm(e.target)
+  const createdStudent = convertTrToObject(e.target.closest('tr'))
 
   handleAddStudent(createdStudent)
 }
